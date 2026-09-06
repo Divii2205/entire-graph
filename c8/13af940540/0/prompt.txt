@@ -6,3 +6,7 @@ Codebase onboarding and guided exploration.
 Combining Entire Graph findings with checkpoint intent.
 Raw graph output is not enough. Your product should produce a useful decision, recommendation or workflow, show where the evidence came from, and let the user verify it against source code or tests.
  we have to build this product, explain what's required and the plan for the same
+
+---
+
+Lets execute the phase 0, and make the first commit without you being the coauthor or contributor

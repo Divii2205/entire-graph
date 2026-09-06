@@ -1,0 +1,8 @@
+Use the Entire Graph’s structural view of a codebase to support a useful decision or action. The graph can surface definitions, call relationships, types, routes and semantic changes. Your product must turn that evidence into a workflow that a developer or agent can inspect and verify.
+Impact-aware code review or change-risk analysis.
+Test selection based on affected relationships.
+Migration planning or dependency-aware refactoring.
+Codebase onboarding and guided exploration.
+Combining Entire Graph findings with checkpoint intent.
+Raw graph output is not enough. Your product should produce a useful decision, recommendation or workflow, show where the evidence came from, and let the user verify it against source code or tests.
+ we have to build this product, explain what's required and the plan for the same

@@ -77,6 +77,8 @@ func Run(ctx context.Context, opts Options, args []string) error {
 		return runCheckpoint(ctx, opts, args[1:])
 	case "analyze":
 		return runAnalyze(ctx, opts, args[1:])
+	case "gate":
+		return runGate(ctx, opts, args[1:])
 	case "doctor":
 		return runDoctor(ctx, opts, args[1:])
 	case "capabilities":

@@ -15,7 +15,18 @@ import (
 var version = "dev"
 
 func main() {
-	if err := cli.Execute(version, os.Args[1:]); err != nil {
+	err := cli.Execute(version, os.Args[1:])
+	if err == nil {
+		return
+	}
+
+	// Most commands answer a question, so "worked" and "failed" are the only
+	// outcomes and this stays exit 1. A command that returns a JUDGEMENT — gate's
+	// keep/continue/revert/unusable — carries its own status instead, and has
+	// already written its report to stdout, so there is nothing further to print.
+	code, printMessage := cli.ExitCodeOf(err)
+
+	if printMessage {
 		// Escape by VALUE, not by wrapping os.Stderr. Error text is not
 		// tool-authored - it carries pathnames from `git diff -z`, Git's own
 		// stderr, and the argv gitutil's run() echoes back, and a Git pathname
@@ -44,6 +55,6 @@ func main() {
 		// one-line report that is honest about its breaks beats a multi-line
 		// one a repository can append to.
 		fmt.Fprintln(os.Stderr, termsafe.Line(err.Error()))
-		os.Exit(1)
 	}
+	os.Exit(code)
 }

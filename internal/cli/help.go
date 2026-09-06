@@ -357,6 +357,29 @@ var commandDocs = []commandDoc{
 		examples: []string{"entire graph checkpoint abc123 --json"},
 	},
 	{
+		name:    "gate",
+		group:   groupAnalyze,
+		summary: "Decide whether a range of changes is safe to keep, and what to read first",
+		usage:   []string{"entire graph gate [--repo .] [--base HEAD~1] [--head HEAD] [--json] [--all] [--limit n]"},
+		long: "gate turns the graph into a decision. It prints a verdict — keep, continue, revert or unusable — a ranked list of the entities a human should actually read, and the citations behind each one, then exits with a status so CI can enforce it with nobody watching.\n\n" +
+			"Every finding comes from something the change did not write: the callers, git history, and the repo's own test tree. The description of the change is never read, and no model is in the loop, so the same range always produces the same bytes.\n\n" +
+			"A check that could not run is reported as NOT RUN, never as a failure, and can never push the verdict upward — missing risk or coverage evidence caps the verdict at continue, and missing both makes the run unusable. The rules are printed in every run.\n\n" +
+			"Exit codes: 0 keep · 1 continue · 2 revert · 5 unusable.",
+		flags: []flagDoc{
+			{name: "--repo", arg: "path", desc: "Repository (default: current repo)"},
+			{name: "--base", arg: "ref", def: "HEAD~1", desc: "The tree before the change"},
+			{name: "--head", arg: "ref", def: "HEAD", desc: "The tree after the change"},
+			{name: "--json", desc: "Emit the report as JSON, for a reviewing agent or CI"},
+			{name: "--all", desc: "Print every entity and every citation, not the ranked head"},
+			{name: "--limit", arg: "n", def: "10", desc: "Rows in the review order (0 for unbounded)"},
+			{name: "--sample", desc: "Run the pipeline on the built-in fixture instead of git"},
+		},
+		examples: []string{
+			"entire graph gate --repo . --base main --head HEAD",
+			"entire graph gate --repo . --base main --head HEAD --json",
+		},
+	},
+	{
 		name:    "verify",
 		group:   groupAnalyze,
 		summary: "Run a test command and return an adjudicated verdict, not test output",
